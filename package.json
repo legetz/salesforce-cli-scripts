@@ -4,7 +4,7 @@
   "description": "Collection of Salesforce scripts written with TypeScript and powered by JSForce",
   "main": "src/abort.ts",
   "scripts": {
-    "start": "npm run tsc && node ./build/abort.js",
+    "abort": "npm run tsc && node ./build/abort.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc"
   },
