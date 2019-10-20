@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "moduleResolution": "node",
+      "noUnusedLocals": false,
+      "noUnusedParameters": true,
+      "sourceMap": false,
+      "target": "es5",
+      "outDir": "./build"
+    },
+    "exclude": [
+      "node_modules"
+    ]
+  }
+  
