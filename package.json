@@ -15,7 +15,6 @@
     "@types/node": "^12.11.1",
     "dotenv": "^8.2.0",
     "jsforce": "^1.9.2",
-    "typescript": "^3.6.4",
-    "csv-parse": ">=4.4.6"
+    "typescript": "^3.6.4"
   }
 }
