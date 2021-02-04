@@ -47,3 +47,73 @@ export function abortBulkJob(jobId: string) {
         }
     })
 }
+
+export function updateBulk(tableName: string, records: any[]) {
+	return new Promise ((resolve, reject) => {
+		let returnMap: any = {}
+		sfConn.sobject(tableName).updateBulk(
+			records,
+			function(err: any, rets: any[]) {
+				if (err) { 
+					reject(err) 
+				} else {
+					for (var i=0; i < rets.length; i++) {
+						if(rets[i].success) {
+							//console.log("Upsert " + rets[i].id)
+							returnMap[rets[i].id] = rets[i].success
+						} else {
+                            if(!rets[i].id) {
+                                rets[i].id = records[i].Id;
+                            }
+                            console.log(`ERROR, Line ${i}: ${JSON.stringify(rets[i])}`)
+                        }
+					}
+					resolve(returnMap)
+				}
+			}
+		)
+	})
+}
+
+export function updateBulkCsv(tableName: string, filepath: string) {
+	return new Promise ((resolve, reject) => {
+        const csvFileIn = require('fs').createReadStream(filepath);
+
+		let returnMap: any = {}
+		sfConn.bulk.load(
+            tableName,
+            "update",
+			csvFileIn,
+			function(err: any, rets: any[]) {
+				if (err) { 
+					reject(err) 
+				} else {
+					for (var i=0; i < rets.length; i++) {
+						if(rets[i].success) {
+							//console.log("Upsert " + rets[i].id)
+							returnMap[rets[i].id] = rets[i].success
+						} else {
+                            console.log(`ERROR, Line ${i}: ${JSON.stringify(rets[i])}`)
+                        }
+					}
+					resolve(returnMap)
+				}
+			}
+		)
+	})
+}
+
+export function getCases() {
+	return new Promise (async function (resolve, reject) {
+        const records: any = []
+        
+        const fs = require('fs');
+        try {
+            await sfConn.bulk.query("SELECT Id FROM Case")
+            .stream().pipe(fs.createWriteStream('./cases.csv'));
+            resolve()
+        } catch (e) {
+            reject(e)
+        }
+	})
+}

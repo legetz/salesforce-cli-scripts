@@ -14,3 +14,5 @@ Collection of Salesforce scripts written with TypeScript and powered by JSForce
 * Run desired script
 	* Abort list of BULK API jobs (update jobList at abort.ts before running command)
 		* `npm run abort`
+	* Do BULK API update
+		* `npm run bulk-update`
