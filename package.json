@@ -7,6 +7,7 @@
     "abort": "npm run tsc && node ./build/abort.js",
     "bulk-update": "npm run tsc && node ./build/bulk-update.js",
     "export-data": "npm run tsc && node ./build/export-data.js",
+    "empty-fields": "npm run tsc && node ./build/empty-fields.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc"
   },
