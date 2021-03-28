@@ -7,10 +7,8 @@
     "abort": "yarn run build && node ./build/abort.js",
     "bulk-update": "yarn run build && node ./build/bulk-update.js",
     "export-data": "yarn run build && node ./build/export-data.js",
-    "empty-fields": "yarn run build && node ./build/empty-fields.js",
-    "export-files": "yarn run build && node ./build/export-files.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "script": "cd src && ts-node",
+    "exec": "cd src && ts-node",
     "build": "tsc"
   },
   "author": "Leo Jokinen",

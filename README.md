@@ -22,6 +22,8 @@ Collection of Salesforce scripts written with TypeScript and powered by JSForce
   - Do BULK API update
     - `yarn run bulk-update`
   - Export files related to certain SF records into export folder
-    - `yarn run export-files`
+    - `yarn exec export-files`
+  - Empty certain case fields based on the cases.json file containing case ID's
+    - `yarn exec empty-fields`
   - Connect to local MongoDB docker container
-    - `yarn script database-test`
+    - `yarn exec database-test`
