@@ -3,7 +3,7 @@ import { AccountModel } from "./accounts/accounts.model";
 let database: Mongoose.Connection;
 export const connect = () => {
   // add your own uri below
-  const uri = "mongodb://localhost:27017/test";
+  const uri = "mongodb://admin:test@localhost:27888/?authSource=admin";
   if (database) {
     return;
   }
