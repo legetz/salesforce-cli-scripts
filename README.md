@@ -23,3 +23,5 @@ Collection of Salesforce scripts written with TypeScript and powered by JSForce
     - `yarn run bulk-update`
   - Export files related to certain SF records into export folder
     - `yarn run export-files`
+  - Connect to local MongoDB docker container
+    - `yarn script database-test`
