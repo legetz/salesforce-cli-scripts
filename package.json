@@ -4,13 +4,14 @@
   "description": "Collection of Salesforce scripts written with TypeScript and powered by JSForce",
   "main": "src/abort.ts",
   "scripts": {
-    "abort": "yarn run tsc && node ./build/abort.js",
-    "bulk-update": "yarn run tsc && node ./build/bulk-update.js",
-    "export-data": "yarn run tsc && node ./build/export-data.js",
-    "empty-fields": "yarn run tsc && node ./build/empty-fields.js",
-    "export-files": "yarn run tsc && node ./build/export-files.js",
+    "abort": "yarn run build && node ./build/abort.js",
+    "bulk-update": "yarn run build && node ./build/bulk-update.js",
+    "export-data": "yarn run build && node ./build/export-data.js",
+    "empty-fields": "yarn run build && node ./build/empty-fields.js",
+    "export-files": "yarn run build && node ./build/export-files.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "tsc"
+    "script": "cd src && ts-node",
+    "build": "tsc"
   },
   "author": "Leo Jokinen",
   "license": "ISC",
