@@ -8,7 +8,7 @@
     "bulk-update": "yarn run build && node ./build/bulk-update.js",
     "export-data": "yarn run build && node ./build/export-data.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "exec": "cd src && ts-node",
+    "do": "cd src && ts-node",
     "build": "tsc"
   },
   "author": "Leo Jokinen",
