@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import { findOneOrCreate, findByName } from "./accounts.statics";
 
 const AccountSchema = new Schema({
-  accountId: String,
+  accountId: { type: String, unique: true },
   name: String,
   createdDate: {
     type: Date,
