@@ -1,7 +1,7 @@
 require("dotenv").config();
 const fs = require("fs");
-import { doLogin, updateBulk } from "./salesforce";
-import * as logger from "./logger";
+import { doLogin, updateBulk } from "./lib/salesforce";
+import * as logger from "./lib/logger";
 
 export const emptyFields: any = async () => {
 	// Login to Salesforce
