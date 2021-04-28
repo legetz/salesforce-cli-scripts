@@ -10,6 +10,8 @@ const exec = util.promisify(require("child_process").exec);
  * After insert you might be interested to add some helper columns/indexes like:
  * - ALTER TABLE table_name ADD COLUMN "status" TEXT
  * - CREATE UNIQUE INDEX id_index ON table_name(Id)
+ * 
+ * Install also https://sqlitebrowser.org/ if you want to have GUI app for SQLite
  */
 export const mainFunc: any = async () => {
 	const dbFolder = "./db";
