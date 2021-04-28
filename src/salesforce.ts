@@ -1,7 +1,8 @@
 import { Connection } from "jsforce";
-const requestpromise = require('request-promise')
+const requestpromise = require('request-promise');
+const fs = require("fs");
 
-const SF_API_VERSION = "49.0";
+const SF_API_VERSION = "50.0";
 
 let sfConn: any = new Connection({
 	version: SF_API_VERSION,
@@ -55,6 +56,20 @@ export function abortBulkJob(jobId: string) {
 	});
 }
 
+export function update(tableName: string, record: any) {
+	return new Promise((resolve, reject) => {
+		sfConn
+			.sobject(tableName)
+			.update(record, function (err: any, ret: any) {
+				if (err || !ret.success) {
+					reject(err);
+				} else {
+					resolve(ret.id);
+				}
+			});
+	});
+}
+
 export function updateBulk(tableName: string, records: any[]) {
 	return new Promise((resolve, reject) => {
 		let returnMap: any = {};
@@ -66,7 +81,7 @@ export function updateBulk(tableName: string, records: any[]) {
 				} else {
 					for (var i = 0; i < rets.length; i++) {
 						if (rets[i].success) {
-							//console.log("Upsert " + rets[i].id)
+							//console.log("Updated " + rets[i].id)
 							returnMap[rets[i].id] = rets[i].success;
 						} else {
 							if (!rets[i].id) {
@@ -83,7 +98,7 @@ export function updateBulk(tableName: string, records: any[]) {
 
 export function updateBulkCsv(tableName: string, filepath: string) {
 	return new Promise((resolve, reject) => {
-		const csvFileIn = require("fs").createReadStream(filepath);
+		const csvFileIn = fs.createReadStream(filepath);
 
 		let returnMap: any = {};
 		sfConn.bulk.load(
@@ -113,7 +128,6 @@ export function getCases() {
 	return new Promise(async function (resolve, reject) {
 		const records: any = [];
 
-		const fs = require("fs");
 		try {
 			await sfConn.bulk
 				.query("SELECT Id FROM Case")
@@ -132,7 +146,6 @@ export function exportRecordsToCSV(soql: string, fileName: string) {
 
 		const fName = "./export/" + fileName;
 
-		const fs = require("fs");
 		try {
 			await sfConn.bulk.query(soql).stream().pipe(fs.createWriteStream(fName));
 			resolve(fName);
