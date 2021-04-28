@@ -1,7 +1,7 @@
 require("dotenv").config();
 import { AccountModel } from "./database/accounts/accounts.model";
 import { connect, disconnect } from "./database/database";
-import * as logger from "./logger";
+import * as logger from "./lib/logger";
 
 /**
  * Start MongoDB docker:
