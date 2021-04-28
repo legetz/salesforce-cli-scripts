@@ -5,7 +5,11 @@ const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 
 /**
- * Import CSV file into SQLite database
+ * Import CSV file into SQLite database as new table
+ * 
+ * After insert you might be interested to add some helper columns/indexes like:
+ * - ALTER TABLE table_name ADD COLUMN "status" TEXT
+ * - CREATE UNIQUE INDEX id_index ON table_name(Id)
  */
 export const mainFunc: any = async () => {
 	const dbFolder = "./db";
