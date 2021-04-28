@@ -102,6 +102,20 @@ export function updateBulk(tableName: string, records: any[]) {
 	});
 }
 
+export function insertBulk(tableName: string, records: any[]) {
+	return new Promise((resolve, reject) => {
+		sfConn
+			.sobject(tableName)
+			.insertBulk(records, function (err: any, rets: any[]) {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(rets);
+				}
+			});
+	});
+}
+
 export function updateBulkCsv(tableName: string, filepath: string) {
 	return new Promise((resolve, reject) => {
 		const csvFileIn = fs.createReadStream(filepath);
