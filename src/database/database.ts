@@ -1,5 +1,5 @@
 import * as Mongoose from "mongoose";
-import { AccountModel } from "./accounts/accounts.model";
+
 let database: Mongoose.Connection;
 export const connect = () => {
   // add your own uri below

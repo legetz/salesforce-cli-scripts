@@ -1,9 +1,10 @@
 import { Connection } from "jsforce";
 import * as logger from "./logger";
-const requestpromise = require('request-promise');
+const requestpromise = require("request-promise");
 const fs = require("fs");
 
 const SF_API_VERSION = "50.0";
+const EXPORT_FOLDER = "./export";
 
 let sfConn: any = new Connection({
 	version: SF_API_VERSION,
@@ -13,6 +14,10 @@ let sfConn: any = new Connection({
 });
 
 sfConn.bulk.pollTimeout = 60000 * 15; // 15 minute timeout for BULK API
+
+if (!fs.existsSync(EXPORT_FOLDER)) {
+	fs.mkdirSync(EXPORT_FOLDER);
+}
 
 export function doLogin() {
 	return new Promise(async function (resolve, reject) {
@@ -61,15 +66,13 @@ export function abortBulkJob(jobId: string) {
 
 export function update(tableName: string, record: any) {
 	return new Promise((resolve, reject) => {
-		sfConn
-			.sobject(tableName)
-			.update(record, function (err: any, ret: any) {
-				if (err || !ret.success) {
-					reject(err);
-				} else {
-					resolve(ret.id);
-				}
-			});
+		sfConn.sobject(tableName).update(record, function (err: any, ret: any) {
+			if (err || !ret.success) {
+				reject(err);
+			} else {
+				resolve(ret.id);
+			}
+		});
 	});
 }
 
@@ -135,7 +138,7 @@ export function getCases() {
 			await sfConn.bulk
 				.query("SELECT Id FROM Case")
 				.stream()
-				.pipe(fs.createWriteStream("./export/cases.csv"));
+				.pipe(fs.createWriteStream(EXPORT_FOLDER + "/cases.csv"));
 			resolve(null);
 		} catch (e) {
 			reject(e);
@@ -147,7 +150,7 @@ export function exportRecordsToCSV(soql: string, fileName: string) {
 	return new Promise(async function (resolve, reject) {
 		const records: any = [];
 
-		const fName = "./export/" + fileName;
+		const fName = EXPORT_FOLDER + "/" + fileName;
 
 		try {
 			await sfConn.bulk.query(soql).stream().pipe(fs.createWriteStream(fName));
@@ -170,7 +173,7 @@ export function getRecords(soql: string, maxFetch?: number) {
 				records.push(record);
 			})
 			.on("end", () => {
-                /*
+				/*
                 logger.log("Total in database : " + query.totalSize);
                 logger.log("Total fetched : " + query.totalFetched);
                 */
@@ -185,14 +188,20 @@ export function getRecords(soql: string, maxFetch?: number) {
 
 export function getContentVersionBody(documentId) {
 	const options = {
-		"method": "GET",
-		"uri": sfConn.instanceUrl + "/services/data/v" + SF_API_VERSION + "/sobjects/ContentVersion/" + documentId + "/VersionData",
-		"encoding" : null,
-		"headers": {
-			"authorization": "Bearer " + sfConn.accessToken,
-			"cache-control": "no-cache"
-		}
-	}
+		method: "GET",
+		uri:
+			sfConn.instanceUrl +
+			"/services/data/v" +
+			SF_API_VERSION +
+			"/sobjects/ContentVersion/" +
+			documentId +
+			"/VersionData",
+		encoding: null,
+		headers: {
+			authorization: "Bearer " + sfConn.accessToken,
+			"cache-control": "no-cache",
+		},
+	};
 
 	return requestpromise(options);
 }

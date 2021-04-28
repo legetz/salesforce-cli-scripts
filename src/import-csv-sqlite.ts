@@ -1,5 +1,5 @@
 require("dotenv").config();
-import * as logger from "./logger";
+import * as logger from "./lib/logger";
 const fs = require("fs");
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);

@@ -1,12 +1,10 @@
 require('dotenv').config()
-import { doLogin, checkBulkJob, abortBulkJob } from './salesforce';
+import { doLogin, checkBulkJob, abortBulkJob } from './lib/salesforce';
 
 export const abortOpenJobs: any = async () => {
 	// Login to Salesforce
 	try {
-		console.log('Login to Salesforce')
-		const session: any = await doLogin()
-		console.log('Successfully logged into instance ' + session.instanceUrl)
+		await doLogin()
 	} catch (ex) {
 		console.log('ERROR: Failed to login Salesforce')
 		throw (ex)
