@@ -4,11 +4,10 @@
   "description": "Collection of Salesforce scripts written with TypeScript and powered by JSForce",
   "main": "src/abort.ts",
   "scripts": {
-    "abort": "yarn run build && node ./build/abort.js",
-    "bulk-update": "yarn run build && node ./build/bulk-update.js",
-    "export-data": "yarn run build && node ./build/export-data.js",
+    "abort": "ts-node src/abort",
+    "bulk-update": "ts-node src/bulk-update",
+    "export-data": "ts-node src/export-data",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "do": "cd src && ts-node",
     "build": "tsc"
   },
   "author": "Leo Jokinen",
@@ -21,8 +20,10 @@
     "dotenv": "8.2.0",
     "jsforce": "1.10.1",
     "json-2-csv": "3.10.2",
+    "moment-timezone": "0.5.33",
     "mongoose": "5.12.2",
     "request-promise": "4.2.6",
+    "sqlite3": "^5.0.2",
     "time-stamp": "2.2.0",
     "typescript": "4.2.3"
   },
