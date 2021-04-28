@@ -1,6 +1,6 @@
 require("dotenv").config();
-import { doLogin, getRecords, getContentVersionBody } from "./salesforce";
-import * as logger from "./logger";
+import { doLogin, getRecords, getContentVersionBody } from "./lib/salesforce";
+import * as logger from "./lib/logger";
 const fs = require("fs");
 const util = require("util");
 const path = require("path");
