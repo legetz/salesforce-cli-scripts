@@ -17,13 +17,15 @@ Collection of Salesforce scripts written with TypeScript and powered by JSForce
   SF_PASS=YOUR_PASSWORD_AND_SECURITY_TOKEN
   ```
 - Run desired script
-  - Abort list of BULK API jobs (update jobList at abort.ts before running command)
+  - Abort list of BULK API jobs
     - `yarn run abort`
   - Do BULK API update
     - `yarn run bulk-update`
-  - Export files related to certain SF records into export folder
-    - `yarn do export-files`
+  - Export SOQL results into export folder as CSV file
+    - `yarn run export-data-csv`
+  - Import CSV file records into SQLite database
+    - `yarn run import-csv-sqlite`
   - Empty certain case fields based on the cases.json file containing case ID's
-    - `yarn do empty-fields`
+    - `yarn run empty-fields`
   - Connect to local MongoDB docker container
-    - `yarn do database-test`
+    - `yarn run mongo-test`
