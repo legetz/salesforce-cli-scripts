@@ -1,4 +1,5 @@
 import { Connection } from "jsforce";
+import * as logger from "./logger";
 const requestpromise = require('request-promise');
 const fs = require("fs");
 
@@ -15,6 +16,7 @@ sfConn.bulk.pollTimeout = 60000 * 15; // 15 minute timeout for BULK API
 
 export function doLogin() {
 	return new Promise(async function (resolve, reject) {
+		logger.log("Login to Salesforce");
 		sfConn.login(
 			process.env.SF_USER,
 			process.env.SF_PASS,
@@ -27,6 +29,7 @@ export function doLogin() {
 						instanceUrl: sfConn.instanceUrl,
 						userId: userInfo.id,
 					};
+					logger.log("Successfully logged into instance " + sfConn.instanceUrl);
 					resolve(sessionData);
 				}
 			}
@@ -81,13 +84,13 @@ export function updateBulk(tableName: string, records: any[]) {
 				} else {
 					for (var i = 0; i < rets.length; i++) {
 						if (rets[i].success) {
-							//console.log("Updated " + rets[i].id)
+							//logger.log("Updated " + rets[i].id)
 							returnMap[rets[i].id] = rets[i].success;
 						} else {
 							if (!rets[i].id) {
 								rets[i].id = records[i].Id;
 							}
-							console.log(`ERROR, Line ${i}: ${JSON.stringify(rets[i])}`);
+							logger.log(`ERROR, Line ${i}: ${JSON.stringify(rets[i])}`);
 						}
 					}
 					resolve(returnMap);
@@ -111,10 +114,10 @@ export function updateBulkCsv(tableName: string, filepath: string) {
 				} else {
 					for (var i = 0; i < rets.length; i++) {
 						if (rets[i].success) {
-							//console.log("Upsert " + rets[i].id)
+							//logger.log("Upsert " + rets[i].id)
 							returnMap[rets[i].id] = rets[i].success;
 						} else {
-							console.log(`ERROR, Line ${i}: ${JSON.stringify(rets[i])}`);
+							logger.log(`ERROR, Line ${i}: ${JSON.stringify(rets[i])}`);
 						}
 					}
 					resolve(returnMap);
@@ -168,8 +171,8 @@ export function getRecords(soql: string, maxFetch?: number) {
 			})
 			.on("end", () => {
                 /*
-                console.log("Total in database : " + query.totalSize);
-                console.log("Total fetched : " + query.totalFetched);
+                logger.log("Total in database : " + query.totalSize);
+                logger.log("Total fetched : " + query.totalFetched);
                 */
 				resolve(records);
 			})

@@ -1,25 +1,18 @@
 require("dotenv").config();
-const fs = require("fs");
+import * as logger from "./logger";
 import { doLogin, exportRecordsToCSV } from "./salesforce";
 
-export const exportData: any = async () => {
-	// Login to Salesforce
+export const mainFunc: any = async () => {
 	try {
-		console.log("Login to Salesforce");
-		const session: any = await doLogin();
-		console.log("Successfully logged into instance " + session.instanceUrl);
+		await doLogin();
 
-		try {
-			const soql = "SELECT Id, Name FROM Account";
-			await exportRecordsToCSV(soql, "accounts.csv");
-		} catch (ex) {
-			console.log("ERROR: Failed to get data");
-			console.log(ex);
-		}
+		const soql = "SELECT Id, Name FROM Account";
+		const csvFileName = "accounts.csv";
+		await exportRecordsToCSV(soql, csvFileName);
 	} catch (ex) {
-		console.log("ERROR: Failed to login Salesforce");
-		throw ex;
+		logger.error("ERROR happened during data export:");
+		logger.error(ex);
 	}
 };
 
-exportData();
+mainFunc();
