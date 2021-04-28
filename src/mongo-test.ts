@@ -1,6 +1,6 @@
 require("dotenv").config();
 import { AccountModel } from "./database/accounts/accounts.model";
-import { connect, disconnect } from "./database/database";
+import { connect, disconnect } from "./database/mongo";
 import * as logger from "./lib/logger";
 
 /**
