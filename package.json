@@ -16,7 +16,7 @@
   "author": "Leo Jokinen",
   "license": "ISC",
   "engines": {
-    "node": ">14.16.0"
+    "node": ">=14.16.1"
   },
   "dependencies": {
     "chalk": "4.1.0",
