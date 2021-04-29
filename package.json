@@ -8,6 +8,7 @@
     "bulk-update": "ts-node src/bulk-update",
     "export-data-csv": "ts-node src/export-data-csv",
     "import-csv-sqlite": "ts-node src/import-csv-sqlite",
+    "import-csv-sqlite-advanced": "ts-node src/import-csv-sqlite-advanced",
     "empty-fields": "ts-node src/empty-fields",
     "mongo-test": "ts-node src/mongo-test",
     "test": "echo \"Error: no test specified\" && exit 1",
