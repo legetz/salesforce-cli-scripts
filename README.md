@@ -27,8 +27,10 @@ Collection of Salesforce scripts written with TypeScript and powered by JSForce
     - `yarn run bulk-update`
   - Export SOQL results into export folder as CSV file
     - `yarn run export-data-csv`
-  - Import CSV file records into SQLite database
+  - Import CSV file records into SQLite database using simple/automatic table schema
     - `yarn run import-csv-sqlite`
+  - Import CSV file records into SQLite database while controlling table schema
+    - `yarn run import-csv-sqlite-advanced`
   - Empty certain case fields based on the cases.json file containing case ID's
     - `yarn run empty-fields`
   - Connect to local MongoDB docker container
