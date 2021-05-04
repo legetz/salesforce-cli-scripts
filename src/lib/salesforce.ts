@@ -4,7 +4,6 @@ const requestpromise = require("request-promise");
 const fs = require("fs");
 
 const SF_API_VERSION = "50.0";
-const EXPORT_FOLDER = "./export";
 
 let sfConn: any = new Connection({
 	version: SF_API_VERSION,
@@ -14,10 +13,6 @@ let sfConn: any = new Connection({
 });
 
 sfConn.bulk.pollTimeout = 60000 * 15; // 15 minute timeout for BULK API
-
-if (!fs.existsSync(EXPORT_FOLDER)) {
-	fs.mkdirSync(EXPORT_FOLDER);
-}
 
 export function doLogin() {
 	return new Promise(async function (resolve, reject) {
@@ -144,31 +139,11 @@ export function updateBulkCsv(tableName: string, filepath: string) {
 	});
 }
 
-export function getCases() {
-	return new Promise(async function (resolve, reject) {
-		const records: any = [];
-
-		try {
-			await sfConn.bulk
-				.query("SELECT Id FROM Case")
-				.stream()
-				.pipe(fs.createWriteStream(EXPORT_FOLDER + "/cases.csv"));
-			resolve(null);
-		} catch (e) {
-			reject(e);
-		}
-	});
-}
-
 export function exportRecordsToCSV(soql: string, fileName: string) {
 	return new Promise(async function (resolve, reject) {
-		const records: any = [];
-
-		const fName = EXPORT_FOLDER + "/" + fileName;
-
 		try {
-			await sfConn.bulk.query(soql).stream().pipe(fs.createWriteStream(fName));
-			resolve(fName);
+			await sfConn.bulk.query(soql).stream().pipe(fs.createWriteStream(fileName));
+			resolve(fileName);
 		} catch (e) {
 			reject(e);
 		}
