@@ -17,6 +17,10 @@ Collection of Salesforce scripts written with TypeScript and powered by JSForce
   SF_PASS=YOUR_PASSWORD_AND_SECURITY_TOKEN
   ```
 - Run desired script
+  - Export all files connected to accounts
+    - `yarn run export-files`
+    - Script can be easily modified so that files under another table are exported
+      - For example, export cases: `const sfTableApiName = 'Case'`
   - Abort list of BULK API jobs
     - `yarn run abort`
   - Do BULK API update
