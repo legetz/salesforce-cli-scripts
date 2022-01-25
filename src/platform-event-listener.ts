@@ -13,8 +13,9 @@ export const eventListener: any = async () => {
 		const topicUrl = "/event/" + eventTable;
 
 		logger.log(`Listening platform events for ${topicUrl}`);
-		sfConn.streaming.topic(topicUrl).subscribe((message) => {
-			logger.log(message);
+		sfConn.streaming.topic(topicUrl).subscribe((message: any) => {
+			logger.log(`Received event ${JSON.stringify(message.event)} with payload:`);
+			console.dir(message.payload);
 		});
 	} catch (ex) {
 		console.log("ERROR: Failed to login Salesforce");
