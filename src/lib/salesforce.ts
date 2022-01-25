@@ -3,7 +3,7 @@ import * as logger from "./logger";
 const requestpromise = require("request-promise");
 const fs = require("fs");
 
-const SF_API_VERSION = "50.0";
+const SF_API_VERSION = "52.0";
 
 let sfConn: any = new Connection({
 	version: SF_API_VERSION,
@@ -13,6 +13,10 @@ let sfConn: any = new Connection({
 });
 
 sfConn.bulk.pollTimeout = 60000 * 15; // 15 minute timeout for BULK API
+
+export function getConnection(): Connection {
+	return sfConn;
+}
 
 export function doLogin() {
 	return new Promise(async function (resolve, reject) {
@@ -92,6 +96,27 @@ export function updateBulk(tableName: string, records: any[]) {
 						}
 					}
 					resolve(returnMap);
+				}
+			});
+	});
+}
+
+export function updateBulkV2(tableName: string, records: any[]) {
+	return new Promise((resolve, reject) => {
+		sfConn
+			.sobject(tableName)
+			.updateBulk(records, function (err: any, rets: any[]) {
+				if (err) {
+					reject(err);
+				} else {
+					for (var i = 0; i < rets.length; i++) {
+						if (!rets[i].success) {
+							if (!rets[i].id) {
+								rets[i].id = records[i].Id;
+							}
+						}
+					}
+					resolve(rets);
 				}
 			});
 	});
