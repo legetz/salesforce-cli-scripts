@@ -33,6 +33,8 @@ Collection of Salesforce scripts written with TypeScript and powered by JSForce
     - `yarn run abort`
   - Do BULK API update
     - `yarn run bulk-update`
+  - Listen platform events
+    - `yarn run platform-event-listener`
   - Empty certain case fields based on the cases.json file containing case ID's
     - `yarn run empty-fields`
   - Connect to local MongoDB docker container

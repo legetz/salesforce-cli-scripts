@@ -6,6 +6,7 @@
   "scripts": {
     "abort": "ts-node src/abort",
     "bulk-update": "ts-node src/bulk-update",
+    "platform-event-listener": "ts-node src/platform-event-listener",
     "export-data-csv": "ts-node src/export-data-csv",
     "export-files": "ts-node src/export-files",
     "import-csv-sqlite": "ts-node src/import-csv-sqlite",
