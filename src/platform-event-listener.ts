@@ -1,15 +1,19 @@
 require("dotenv").config();
 import { doLogin, getConnection } from "./lib/salesforce";
+import * as logger from "./lib/logger";
 
 export const eventListener: any = async () => {
 	// Login to Salesforce
 	try {
 		await doLogin();
 
-		const eventTable = process.env.PLATFORM_EVENT || "TestEvent__e";
-
 		const sfConn = getConnection();
-		sfConn.streaming.topic("/event/" + eventTable).subscribe((message) => {
+
+		const eventTable = process.env.PLATFORM_EVENT || "TestEvent__e";
+		const topicUrl = "/event/" + eventTable;
+
+		logger.log(`Listening platform events for ${topicUrl}`);
+		sfConn.streaming.topic(topicUrl).subscribe((message) => {
 			console.dir(message);
 		});
 	} catch (ex) {
