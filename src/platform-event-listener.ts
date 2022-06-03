@@ -1,24 +1,28 @@
 require("dotenv").config();
-import { doLogin, getConnection } from "./lib/salesforce";
+import { doLogin, getConnection, subscribe } from "./lib/salesforce";
 import * as logger from "./lib/logger";
+const jsforce = require("jsforce");
+
+const subscribeToEvents = (topicName: string, replayId: number) => {
+  subscribe(topicName, replayId, (message: any) => {
+    logger.log(`Received ${topicName} event: ${message}`);
+  });
+};
 
 export const eventListener: any = async () => {
-  // Login to Salesforce
   try {
     await doLogin();
 
     const sfConn = getConnection();
 
+    // Specify event name and replayId where to continue
     const eventTable = process.env.PLATFORM_EVENT || "TestEvent__e";
     const topicUrl = "/event/" + eventTable;
+    const replayId = -1;
 
-    logger.log(`Listening platform events for ${topicUrl}`);
-    sfConn.streaming.topic(topicUrl).subscribe((message: any) => {
-      logger.log(`Received event ${JSON.stringify(message.event)} with payload:`);
-      console.dir(message.payload);
-    });
+    subscribeToEvents(topicUrl, replayId);
   } catch (ex) {
-    console.log("ERROR: Failed to login Salesforce");
+    logger.error("ERROR: " + ex);
     throw ex;
   }
 };
