@@ -252,7 +252,7 @@ export async function subscribe(
   let error: any = await subscription.subscribe();
 
   if (error === null) {
-    logger.log(`Listening events from Salesforce topic: ${topic}`);
+    logger.log(`Listening events from topic '${topic}'`);
     return;
   }
 

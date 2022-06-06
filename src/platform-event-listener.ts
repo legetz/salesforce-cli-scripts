@@ -5,7 +5,13 @@ const jsforce = require("jsforce");
 
 const subscribeToEvents = (topicName: string, replayId: number) => {
   subscribe(topicName, replayId, (message: any) => {
-    logger.log(`Received ${topicName} event: ${message}`);
+    logger.log(
+      `Received event ${message.event.EventUuid} with replayId ${message.event.replayId}:\n${JSON.stringify(
+        message.payload,
+        null,
+        2
+      )}`
+    );
   });
 };
 
