@@ -4,7 +4,7 @@ import Subscription from "./subscription";
 const requestpromise = require("request-promise");
 const fs = require("fs");
 
-const SF_API_VERSION = "52.0";
+const SF_API_VERSION = "56.0";
 
 let sfConn: any = new Connection({
   version: SF_API_VERSION,
