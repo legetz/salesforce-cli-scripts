@@ -6,6 +6,7 @@ Collection of Salesforce scripts written with TypeScript and powered by JSForce
 
 - `nvm use`
   - Make sure you have [nvm](https://github.com/nvm-sh/nvm/blob/master/README.md) installed
+  - Node.js LTS Hydrogen is the required version (18.x)
 - Install yarn package manager if you lack that
   - `npm install --global yarn`
 - Install dependencies with yarn
