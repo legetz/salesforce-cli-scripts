@@ -246,14 +246,14 @@ export async function subscribe(
   topic: string,
   replayId: any,
   callback: (message: StreamingMessage) => void
-): Promise<void> {
+): Promise<Subscription> {
   const subscription = new Subscription(sfConn, topic, replayId, callback);
   logger.log(`Subscribing to '${topic}' topic using replayId ${replayId}`);
   let error: any = await subscription.subscribe();
 
   if (error === null) {
     logger.log(`Listening events from topic '${topic}'`);
-    return;
+    return subscription;
   }
 
   // Handle generic Salesforce error
@@ -269,6 +269,8 @@ export async function subscribe(
     // Handle retry error
     if (typeof error === "object" && error !== null) {
       logger.error(`Got Salesforce error. code = '${error.code}', message = '${error.message}'`);
+    } else {
+      return subscription;
     }
   } else {
     logger.error(`Unknown error occurred`);
