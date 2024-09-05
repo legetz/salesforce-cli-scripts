@@ -19,7 +19,7 @@
   "author": "Leo Jokinen",
   "license": "ISC",
   "engines": {
-    "node": ">=18.0.0 <19.0.0"
+    "node": ">=20.13.0 <21.0.0"
   },
   "dependencies": {
     "chalk": "4.1.0",
